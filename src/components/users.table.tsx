@@ -1,40 +1,38 @@
-import Table from 'react-bootstrap/Table';
-import Container from 'react-bootstrap/Container';
+import Table from "react-bootstrap/Table";
+import { useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { fetchListUsers } from "../redux/user/user.slide";
 
 function UsersTable() {
-    return (
-        <Container>
-            <Table striped bordered hover>
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Username</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td colSpan={2}>Larry the Bird</td>
-                        <td>@twitter</td>
-                    </tr>
-                </tbody>
-            </Table>
-        </Container>
-    );
+  const dispatch = useAppDispatch();
+  const users = useAppSelector((state) => state.user.listUsers);
+
+  useEffect(() => {
+    dispatch(fetchListUsers());
+  }, []);
+
+  return (
+    <Table striped bordered hover>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        {users?.map((user) => {
+          return (
+            <tr key={user.id}>
+              <td>{user.id}</td>
+              <td>{user.name}</td>
+              <td>{user.email}</td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </Table>
+  );
 }
 
 export default UsersTable;

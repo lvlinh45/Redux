@@ -1,10 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import counterReducer from "./counter/counter.slide";
+import userReducer from "./user/user.slide";
 // redux store: chứa tất cả state quản lý
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
-    // balance: counterReducer,
+    user: userReducer,
   },
 });
 
